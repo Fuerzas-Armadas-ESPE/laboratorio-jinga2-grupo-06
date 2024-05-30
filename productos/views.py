@@ -20,3 +20,11 @@ def agregar_productos(request):
 def eliminar_producto(request, id):
     Producto.objects.get(id=id).delete()
     return redirect('/')
+
+def editar_producto(request, id):
+    producto = Producto.objects.get(id=id)
+    producto.nombre = request.POST['nombreProducto']
+    producto.precio = request.POST['precioProducto']
+    producto.cantidad = request.POST['cantidadProducto']
+    producto.save()
+    return redirect('/')
