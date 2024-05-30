@@ -1,1 +1,54 @@
-<!-- Crear el archivo listar.html -->
+{% extends "base.html" %} 
+{% block title %} 
+Listar Productos 
+{% endblock %} 
+{% block content %}
+<h1>Listar Productos</h1>
+<h1>Agregar Producto</h1>
+
+<form action="/agregar/" method="POST">{% csrf_token %}
+
+  <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+  <div class="input-group mb-3 w-50">
+    <input type="text" class="form-control" aria-label="nombreProducto" aria-describedby="basic-addon1" id="nombreProducto" name="nombreProducto">
+  </div>
+  
+  <label for="precioProducto" class="form-label">Precio</label>
+  <div class="input-group mb-3 w-50">
+    <span class="input-group-text">$</span>
+    <input type="number" class="form-control" aria-label="Precio" id="precioProducto" name="precioProducto">
+  </div>
+  
+  <label for="cantidadProducto" class="form-label">Cantidad</label>
+  <div class="input-group mb-3 w-50">
+    <input type="number" class="form-control" aria-label="Cantidad" aria-describedby="basic-addon2" id="cantidadProducto" name="cantidadProducto">
+  </div>
+  
+  <div>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+  </div>
+</form>
+<table class="table table-striped">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col" colspan="2">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <th scope="row">{{ producto.id }}</th>
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.precio }}</td>
+      <td>{{ producto.cantidad }}</td>
+      <td><a href="editar/{{producto.id}}" class="btn btn-primary">Editar</a></td>
+      <td><a href="eliminar/{{producto.id}}" class="btn btn-danger">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

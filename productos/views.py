@@ -1,8 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Producto
 
 productos = []
 
 def listar_productos(request):
-    # Consulta a la base de datos
-    # Renderiza la plantilla listar.html
+    productos = Producto.objects.all()
+    return render(request, 'listar.html', {'productos': productos})
+
+def agregar_productos(request):
+
+    nombre = request.POST['nombreProducto']
+    precio = request.POST['precioProducto']
+    cantidad = request.POST['cantidadProducto']
+    
+    if nombre and precio and cantidad:
+        Producto.objects.create(nombre=nombre, precio=precio, cantidad=cantidad)
+    return redirect('/')
+
+def eliminar_producto(request, id):
+    Producto.objects.get(id=id).delete()
+    return redirect('/')
